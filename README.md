@@ -6,7 +6,7 @@ Automation test in backend and frontend using testcafe, typescript, postman coll
 
        npm install
 
-1. add a file:
+1. add a file .env in the root folder:
 
        ".env"
 
