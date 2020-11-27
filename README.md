@@ -5,7 +5,9 @@ Automation test in backend and frontend using testcafe, typescript, postman coll
 npm install
 
 -- add a file ".env"
+
 -- add the next variables:
+
 baseUrl = https://todoist.com/
 TOKEN = (replace this with a token created in todoist)
 APP_HOST = https://api.todoist.com
