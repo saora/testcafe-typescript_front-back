@@ -5,15 +5,16 @@ Automation test in backend and frontend using testcafe, typescript, postman coll
 npm install
 
 1. add a file:
-   ".env"
+
+       ".env"
 
 2. add the next variables:
 
-  "baseUrl = https://todoist.com/"
-  "TOKEN = (replace this with a token created in todoist)"
-  "APP_HOST = https://api.todoist.com"
-  "PROJECTS_PATH = /rest/v1/projects"
-  "TASK_PATH = /rest/v1/tasks"
+       "baseUrl = https://todoist.com/"
+       "TOKEN = (replace this with a token created in todoist)"
+       "APP_HOST = https://api.todoist.com"
+       "PROJECTS_PATH = /rest/v1/projects"
+       "TASK_PATH = /rest/v1/tasks"
 
 3. Go to file data.json (testcafe-typescript_front-back/functionalTest/data/data.json) and add the user credentials for todoist:
 
