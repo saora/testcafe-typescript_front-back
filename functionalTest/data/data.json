@@ -1,0 +1,20 @@
+[
+    {
+        "user":"valid user",
+        "email":"salvador.ortuno@wizeline.com",
+        "password":"saora123",
+        "result": "Today"
+    },
+    {
+        "user":"invalid user",
+        "email":"invalid@email.com",
+        "password":"saora123",
+        "result":"Wrong email or password."
+},
+{
+    "user":"invalid password",
+    "email":"user@email.com",
+    "password":"invalidPass",
+    "result":"Wrong email or password."
+}
+]

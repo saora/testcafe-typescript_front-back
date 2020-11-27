@@ -1,0 +1,53 @@
+{
+  "name": "tc-onboarding-task",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  
+
+  "scripts": {
+    "test:mocha:api": "node ./node_modules/mocha/bin/mocha functionalTest/api/*.test.ts",
+    "test:func": "testcafe chrome functionalTest/tests/ -e --reporter list,html:test-reports/testReportChrome.html",
+    "test:functional:chrome:headless": "testcafe chrome:headless functionalTest/tests/ -e",
+    "test:functional:chrome": "testcafe chrome functionalTest/tests/ -e",
+    "test:functional:chrome:headless:with:report": "testcafe chrome:headless functionalTest/tests/ -e --reporter list,html:test-reports/testReportChrome.html",
+    "test:functional:chrome:with:report": "testcafe chrome functionalTest/tests/ -e --reporter list,html:test-reports/testReportChrome.html",
+    "test:functional:firefox:headless": "testcafe firefox:headless functionalTest/tests/ -e",
+    "test:functional:firefox": "testcafe firefox functionalTest/tests/ -e",
+    "test:functional:firefox:headless:with:report": "testcafe firefox:headless functionalTest/tests -e --reporter list,html:test-reports/testReportFirefox.html",
+    "test:functional:firefox:with:report": "testcafe firefox functionalTest/tests -e --reporter list,html:test-reports/testReportFirefox.html",
+    "test:functional:safari": "testcafe safari functionalTest/tests -e",
+    "test:functional:safari:with:report": "testcafe safari functionalTest/tests -e --reporter list,html:test-reports/testReportSafari.html",
+    "test:functional:all:browsers": "testcafe all functionalTest/tests -e",
+    "test:functional:all:browsers:with:report": "testcafe all functionalTest/tests -e --reporter list,html:test-reports/testReportAllBrowsers.html",
+    "lint": "eslint ./functionalTest --fix",
+    "test:api": "newman run functionalTest/api/todoist.postman_collection.json -e functionalTest/api/todoist.postman_environment.json",
+    "test:api:report": "newman run functionalTest/api/todoist.postman_collection.json -e functionalTest/api/todoist.postman_environment.json -r htmlextra --reporter-htmlextra-export test-reports/apiNewmanReport.html"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/mocha": "^8.0.4",
+    "@types/node": "^10.17.46",
+    "chai": "^4.2.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "mocha": "^8.2.1",
+    "newman": "^5.2.1",
+    "newman-reporter-htmlextra": "^1.19.6",
+    "supertest": "^6.0.1",
+    "testcafe": "^1.9.4",
+    "typescript": "^3.9.7"
+  },
+  "dependencies": {
+    "eslint": "^7.14.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-react": "^7.21.5",
+    "eslint-plugin-testcafe": "^0.2.1",
+    "testcafe-browser-provider-browserstack": "^1.13.1",
+    "testcafe-reporter-html": "^1.4.6"
+  }
+}

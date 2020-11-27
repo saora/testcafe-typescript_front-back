@@ -1,0 +1,1649 @@
+{
+	"info": {
+		"_postman_id": "34f12496-cb7d-47d9-9b77-9ae137e33852",
+		"name": "todoist",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "projects",
+			"item": [
+				{
+					"name": "get all projects - success",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "72256e44-ca57-48ef-992b-496e863ef842",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200)",
+									"    })",
+									"\t\t\t\t\t\t\t\t\t",
+									"pm.test(\"Content-Type header is present\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\")",
+									"})",
+									"",
+									"pm.test(\"Response is a json file\", function () {",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\")",
+									"    })",
+									"",
+									"pm.test(\"Response time is less than 1000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/rest/v1/projects",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"rest",
+								"v1",
+								"projects"
+							]
+						},
+						"description": "Get all proyects created"
+					},
+					"response": []
+				},
+				{
+					"name": "get all projects - Empty token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "2cfa6d1a-43c0-4999-8ebb-75de58e6ec4a",
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400)",
+									"    })",
+									"\t\t\t\t\t\t\t\t\t",
+									"pm.test(\"Empty token\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"Empty token\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/rest/v1/projects",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"rest",
+								"v1",
+								"projects"
+							]
+						},
+						"description": "Trying to get all projects with empty token"
+					},
+					"response": []
+				},
+				{
+					"name": "get all projects - Invalid token ",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7edd4d11-41dc-4af1-90ee-7fd7762ebc64",
+								"exec": [
+									"pm.test(\"Status code is 403\", function () {",
+									"    pm.response.to.have.status(403)",
+									"})",
+									"",
+									"pm.test(\"Invalid token\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"Forbidden\");",
+									"});",
+									"\t\t\t\t\t\t\t\t\t"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer invalidtoken"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/rest/v1/projects",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"rest",
+								"v1",
+								"projects"
+							]
+						},
+						"description": "Trying to get all projects with invalid token"
+					},
+					"response": []
+				},
+				{
+					"name": "create a new project - success",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "76b739f8-808c-49b8-82a9-a97a1d942822",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Content-Type is present\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"});",
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 201, 202]);",
+									"});",
+									"",
+									"let response = pm.response.json(),",
+									"savedData = JSON.stringify(response.id)",
+									"pm.environment.set(\"project_id\", savedData);",
+									"",
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.text()).to.include(pm.environment.get(\"project_name\"));",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "fa91f0fe-afb0-4a3c-a756-5636f597d634",
+								"exec": [
+									"const randonTaskName = pm.variables.replaceIn('{{$randomCompanyName}}')",
+									"console.log(randonTaskName)",
+									"pm.environment.set(\"project_name\", randonTaskName)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \n    \"name\": \"{{project_name}}\",\n    \"comment_count\": 0,\n    \"color\": 47,\n    \"shared\": false,\n    \"sync_id\": 0,\n    \"order\": 1,\n    \"favorite\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/rest/v1/projects",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"rest",
+								"v1",
+								"projects"
+							]
+						},
+						"description": "Create a new project successfully"
+					},
+					"response": []
+				},
+				{
+					"name": "create a new project - Empty name",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "6eec1a43-4dac-4094-a6c3-e8edcdd188fb",
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Project with empty name\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"Empty name\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \n    \"name\":null,\n    \"comment_count\": 0,\n    \"color\": 47,\n    \"shared\": false,\n    \"sync_id\": 0,\n    \"order\": 1,\n    \"favorite\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/rest/v1/projects",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"rest",
+								"v1",
+								"projects"
+							]
+						},
+						"description": "Trying to create a project with no name"
+					},
+					"response": []
+				},
+				{
+					"name": "get a project - success",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f04120d1-48d8-4244-82e3-060644d58b9f",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200)",
+									"    })",
+									"\t\t\t\t\t\t\t\t\t",
+									"pm.test(\"Content-Type header is present\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\")",
+									"})",
+									"",
+									"pm.test(\"Response is a json file\", function () {",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\")",
+									"    })",
+									"",
+									"pm.test(\"Response time is less than 1000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+									"});",
+									"",
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.text()).to.include(pm.environment.get(\"project_id\"));",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/rest/v1/projects/{{project_id}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"rest",
+								"v1",
+								"projects",
+								"{{project_id}}"
+							]
+						},
+						"description": "Get a proyect already created"
+					},
+					"response": []
+				},
+				{
+					"name": "get a project - Not found",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "37d0c6a5-34d5-40ce-a3a9-509dbd42f2b5",
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {",
+									"    pm.response.to.have.status(404)",
+									"})",
+									"\t\t\t\t\t\t\t\t\t",
+									"",
+									"pm.test(\"Project not found\", function () {",
+									"    pm.expect(pm.response.text()).to.include('Not Found');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/rest/v1/projects/1234567",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"rest",
+								"v1",
+								"projects",
+								"1234567"
+							]
+						},
+						"description": "Tryng to get a project when it is not found"
+					},
+					"response": []
+				},
+				{
+					"name": "update a project - success",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b275e266-6b3d-48cd-b8bc-0052d0beb5c8",
+								"exec": [
+									"pm.test(\"Status code is 204\", function(){",
+									"    pm.response.to.have.status(204)",
+									"})",
+									"",
+									"pm.test(\"Body matches string\", function(){",
+									"    pm.expect(pm.response.text()).to.include(\"\");",
+									"})",
+									"pm.test(\"Response time is less than 1000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "80a0e85a-35bd-414c-8661-c37fd0c6dff3",
+								"exec": [
+									"const randonTaskName = pm.variables.replaceIn('{{$randomCompanyName}}')",
+									"console.log(randonTaskName)",
+									"pm.environment.set(\"project_name\", randonTaskName)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"{{project_name}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/rest/v1/projects/{{project_id}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"rest",
+								"v1",
+								"projects",
+								"{{project_id}}"
+							]
+						},
+						"description": "Update a proyect created"
+					},
+					"response": []
+				},
+				{
+					"name": "update a project - Empty name",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5950e5a1-7352-43b7-b712-a55eb85fb58e",
+								"exec": [
+									"pm.test(\"Status code is 400\", function(){",
+									"    pm.response.to.have.status(400)",
+									"})",
+									"",
+									"pm.test(\"Update name of a project\", function(){",
+									"    pm.expect(pm.response.text()).to.include(\"Empty name\");",
+									"})",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": null\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/rest/v1/projects/{{project_id}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"rest",
+								"v1",
+								"projects",
+								"{{project_id}}"
+							]
+						},
+						"description": "Trying to update data of a project with an empty name"
+					},
+					"response": []
+				},
+				{
+					"name": "delete a project - success",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "1c9aca0b-0b25-4e08-baf4-01a85b8f85d7",
+								"exec": [
+									"",
+									"pm.test(\"Successful project deleted\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([204]);",
+									"    //pm.environment.unset(\"project_id\");",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/rest/v1/projects/{{project_id}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"rest",
+								"v1",
+								"projects",
+								"{{project_id}}"
+							]
+						},
+						"description": "Delete a project successfully"
+					},
+					"response": []
+				},
+				{
+					"name": "delete a project - Not found",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7fcca78c-cfd5-4ce4-9492-501a9893a33c",
+								"exec": [
+									"",
+									"pm.test(\"No longer exist\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([404]);",
+									"",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/rest/v1/projects/project1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"rest",
+								"v1",
+								"projects",
+								"project1"
+							]
+						},
+						"description": "Trying to delete a project that doesn't exist"
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "tasks",
+			"item": [
+				{
+					"name": "get active tasks - success",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ca8ac530-ed47-4039-ad10-eaba9174d617",
+								"exec": [
+									"pm.test(\"Response validation\", function(){",
+									"    pm.response.to.have.status(200)",
+									"})",
+									"",
+									"pm.test(\"Content-Type header is present\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\")",
+									"})",
+									"",
+									"pm.test(\"Response is a json file\", function () {",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\")",
+									"    })",
+									"",
+									"pm.test(\"Response time is less than 1000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/rest/v1/tasks",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"rest",
+								"v1",
+								"tasks"
+							]
+						},
+						"description": "Get all active task"
+					},
+					"response": []
+				},
+				{
+					"name": "get active tasks - invalid token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e9fbfb05-6a38-4f86-ae19-e19dcdd938f8",
+								"exec": [
+									"pm.test(\"Response validation\", function(){",
+									"    pm.response.to.have.status(403)",
+									"})",
+									"",
+									"pm.test(\"Body response\", function () {",
+									"    pm.expect(pm.response.text()).to.contain(\"Forbidden\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}xx",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/rest/v1/tasks",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"rest",
+								"v1",
+								"tasks"
+							]
+						},
+						"description": "Trying to get all active task when the token is no valid"
+					},
+					"response": []
+				},
+				{
+					"name": "get active tasks - empty token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f4d85eb1-0a91-4b87-a89d-b160bbb8bfd8",
+								"exec": [
+									"pm.test(\"Response validation\", function(){",
+									"    pm.response.to.have.status(400)",
+									"})",
+									"",
+									"pm.test(\"Response empty token\", function () {",
+									"    pm.expect(pm.response.text()).to.contain(\"Empty token\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": ""
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/rest/v1/tasks",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"rest",
+								"v1",
+								"tasks"
+							]
+						},
+						"description": "Trying to get all active task when token is missing"
+					},
+					"response": []
+				},
+				{
+					"name": "create a new task - success",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d96f7485-f5e3-4117-8c09-8e088c6f415f",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Content-Type is present\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"});",
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 201, 202]);",
+									"});",
+									"",
+									"let response = pm.response.json(),",
+									"savedData = JSON.stringify(response.id)",
+									"pm.environment.set(\"task_id\", savedData); ",
+									"",
+									"pm.test(\"Task created validation\", function () {",
+									"    pm.expect(pm.response.text()).to.include(pm.environment.get(\"task_name\"));",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "e4304d5e-148d-4d6c-bb2e-0029d591e6e2",
+								"exec": [
+									"const randonTaskName = pm.variables.replaceIn('{{$isoTimestamp}}')",
+									"console.log(randonTaskName)",
+									"pm.environment.set(\"task_name\", randonTaskName)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"warning": "This is a duplicate header and will be overridden by the Authorization header generated by Postman.",
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"content\": \"{{task_name}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/rest/v1/tasks",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"rest",
+								"v1",
+								"tasks"
+							]
+						},
+						"description": "Create a new task with random name"
+					},
+					"response": []
+				},
+				{
+					"name": "create a new task - empty task name",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "94c67102-c1f1-4fcd-bf2d-affc54d8053c",
+								"exec": [
+									"",
+									"pm.test(\"Failed request with status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"pm.test(\"Task created validation\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"Empty content\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "4a571231-f95f-4365-81aa-63ff5af056f3",
+								"exec": [
+									"const randonTaskName = pm.variables.replaceIn('{{$isoTimestamp}}')",
+									"console.log(randonTaskName)",
+									"pm.environment.set(\"task_name\", randonTaskName)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"warning": "This is a duplicate header and will be overridden by the Authorization header generated by Postman.",
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"content\": null\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/rest/v1/tasks",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"rest",
+								"v1",
+								"tasks"
+							]
+						},
+						"description": "trying to create a new task with empty name"
+					},
+					"response": []
+				},
+				{
+					"name": "get an active task - success",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8c6679d8-39d5-4ac8-910e-69ea0f95823d",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Content-Type is present\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"});",
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 201, 202]);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 1000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/rest/v1/tasks/{{task_id}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"rest",
+								"v1",
+								"tasks",
+								"{{task_id}}"
+							]
+						},
+						"description": "Get an active task successfully"
+					},
+					"response": []
+				},
+				{
+					"name": "get an active task - closed",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "f5ebae32-dddf-42e6-91bb-086cd77d1f68",
+								"exec": [
+									"",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "9305ac9b-db51-4c2a-a87e-bb82685117a6",
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									"",
+									"pm.test(\"Get body response\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"Not Found\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/rest/v1/tasks/4365944937",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"rest",
+								"v1",
+								"tasks",
+								"4365944937"
+							]
+						},
+						"description": "Trying to get a task which is no longer active"
+					},
+					"response": []
+				},
+				{
+					"name": "update task - success",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "97abd7c9-1c67-44a8-8dd4-7712eee42557",
+								"exec": [
+									"const randonTaskName = pm.variables.replaceIn('{{$isoTimestamp}}')",
+									"console.log(randonTaskName)",
+									"pm.environment.set(\"task_name\", randonTaskName)"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "8b28dc96-4432-47da-88be-b7aa7df87816",
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {",
+									"    pm.response.to.have.status(204);",
+									"});",
+									"",
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 201, 202, 204]);",
+									"});",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"content\":\"{{task_name}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/rest/v1/tasks/{{task_id}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"rest",
+								"v1",
+								"tasks",
+								"{{task_id}}"
+							]
+						},
+						"description": "Update a task successfully"
+					},
+					"response": []
+				},
+				{
+					"name": "update task - empty id",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "6e060208-d4d8-4201-8d45-8d54a7179069",
+								"exec": [
+									"const randonTaskName = pm.variables.replaceIn('{{$isoTimestamp}}')",
+									"console.log(randonTaskName)",
+									"pm.environment.set(\"task_name\", randonTaskName)"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "f3bdcd4b-0050-442d-9076-c6c8a2222114",
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									"",
+									"pm.test(\"Get unsuccessful response\", function () {",
+									"    pm.expect(pm.response.text()).to.contains('not found')",
+									"});",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"content\":\"{{task_name}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/rest/v1/tasks/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"rest",
+								"v1",
+								"tasks",
+								""
+							]
+						},
+						"description": "Sending the request to update a task with empty id"
+					},
+					"response": []
+				},
+				{
+					"name": "close task - success",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "927796f9-9df8-4273-9086-2f547fcb1bd5",
+								"exec": [
+									"pm.test(\"Response validation\", function(){",
+									"    pm.response.to.have.status(204)",
+									"})",
+									"",
+									"pm.test(\"Response time is less than 1000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/rest/v1/tasks/{{task_id}}/close",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"rest",
+								"v1",
+								"tasks",
+								"{{task_id}}",
+								"close"
+							]
+						},
+						"description": "Close an active task successfully"
+					},
+					"response": []
+				},
+				{
+					"name": "close task - invalid id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d540aaa1-e97c-4f39-9943-455f467a18c4",
+								"exec": [
+									"pm.test(\"Response validation\", function(){",
+									"    pm.response.to.not.be.status(204)",
+									"})",
+									"",
+									"pm.test(\"Response time is less than 1000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/rest/v1/tasks/12345/close",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"rest",
+								"v1",
+								"tasks",
+								"12345",
+								"close"
+							]
+						},
+						"description": "Trying to close a task by sending a request with invalid id"
+					},
+					"response": []
+				},
+				{
+					"name": "close task - null id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "99f3b429-a6af-40a8-9dcf-e0af158046cd",
+								"exec": [
+									"pm.test(\"Response validation\", function(){",
+									"    pm.response.to.not.be.status(204)",
+									"})",
+									"",
+									"pm.test(\"Response time is less than 1000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/rest/v1/tasks/null/close",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"rest",
+								"v1",
+								"tasks",
+								"null",
+								"close"
+							]
+						},
+						"description": "Trying to close a task by sending a request with null id"
+					},
+					"response": []
+				},
+				{
+					"name": "reopen a task - success",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d9aeee9e-20b5-41ad-856b-c5c1c07c3bf7",
+								"exec": [
+									"pm.test(\"Response validation\", function(){",
+									"    pm.response.to.have.status(204)",
+									"})",
+									"",
+									"pm.test(\"Response time is less than 2000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/rest/v1/tasks/{{task_id}}/reopen",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"rest",
+								"v1",
+								"tasks",
+								"{{task_id}}",
+								"reopen"
+							]
+						},
+						"description": "Reopen a task already closed"
+					},
+					"response": []
+				},
+				{
+					"name": "reopen a task - invalid id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "46a5a093-7bc4-45e2-866a-f4806139e321",
+								"exec": [
+									"pm.test(\"Response validation\", function(){",
+									"    pm.response.to.not.have.status(204)",
+									"})",
+									"",
+									"pm.test(\"Response time is less than 1000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/rest/v1/tasks/12345/reopen",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"rest",
+								"v1",
+								"tasks",
+								"12345",
+								"reopen"
+							]
+						},
+						"description": "Trying to reopen a task by sending a request with an invalid id"
+					},
+					"response": []
+				},
+				{
+					"name": "reopen a task - null id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ff82fc45-9b1b-4d13-b567-b9c5196ad3ef",
+								"exec": [
+									"pm.test(\"Response validation\", function(){",
+									"    pm.response.to.not.have.status(204)",
+									"})",
+									"",
+									"pm.test(\"Response time is less than 2000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/rest/v1/tasks/null/reopen",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"rest",
+								"v1",
+								"tasks",
+								"null",
+								"reopen"
+							]
+						},
+						"description": "Trying to reopen a task by sending a request with a null id"
+					},
+					"response": []
+				},
+				{
+					"name": "delete a task - success",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "25761899-c50a-4d76-89b4-51ccc7975554",
+								"exec": [
+									"pm.test(\"Response validation\", function(){",
+									"    pm.response.to.have.status(204)",
+									"})",
+									"",
+									"pm.test(\"Response time is less than 1000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/rest/v1/tasks/{{task_id}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"rest",
+								"v1",
+								"tasks",
+								"{{task_id}}"
+							]
+						},
+						"description": "Delete a task successfully"
+					},
+					"response": []
+				},
+				{
+					"name": "delete a task - invalid id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "10de2939-e623-43dc-a08e-fbdcdfeff70d",
+								"exec": [
+									"pm.test(\"Response validation\", function(){",
+									"    pm.response.to.not.have.status(204)",
+									"})",
+									"",
+									"pm.test(\"Response time is less than 1000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/rest/v1/tasks/12345",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"rest",
+								"v1",
+								"tasks",
+								"12345"
+							]
+						},
+						"description": "Trying to delete a task by sending a request with an invalid id"
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

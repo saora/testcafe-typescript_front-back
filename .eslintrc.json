@@ -1,0 +1,4 @@
+{
+    "plugins": ["testcafe"],
+    "extends": ["airbnb","plugin:testcafe/recommended"]
+}
