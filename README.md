@@ -10,8 +10,11 @@ npm install
 
 baseUrl = https://todoist.com/
 TOKEN = (replace this with a token created in todoist)
+
 APP_HOST = https://api.todoist.com
+
 PROJECTS_PATH = /rest/v1/projects
+
 TASK_PATH = /rest/v1/tasks
 
    
