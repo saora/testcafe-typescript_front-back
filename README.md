@@ -19,6 +19,8 @@ PROJECTS_PATH = /rest/v1/projects
 TASK_PATH = /rest/v1/tasks
 
 3. Go to file data.json (testcafe-typescript_front-back/functionalTest/data/data.json) and add the user credentials for todoist
+       "email":"put an email account for todoist",
+       "password":"put the password here",
 
 
    
