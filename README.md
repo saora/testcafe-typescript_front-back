@@ -9,6 +9,7 @@ npm install
 -- add the next variables:
 
 baseUrl = https://todoist.com/
+
 TOKEN = (replace this with a token created in todoist)
 
 APP_HOST = https://api.todoist.com
