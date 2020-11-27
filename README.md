@@ -2,6 +2,8 @@
 Automation test in backend and frontend using testcafe, typescript, postman collection, supertest
 
 
+note: You need to create an account in todoist: https://todoist.com/, then create yout token (login into todoist and go settings/integrations).  -- skip this if you already have it
+
 1. Prepare the environment by installing the node dependencies:
 
        npm install
@@ -10,7 +12,7 @@ Automation test in backend and frontend using testcafe, typescript, postman coll
 
        ".env"
 
-2. add the next variables:
+2. Copy and paste the next variables, and add the token created with your account of todoist:
 
         baseUrl = https://todoist.com/
         TOKEN = (replace this with a token created in todoist)
