@@ -17,14 +17,11 @@ jobs:
              - checkout
              - run: npm install
              - run: npm run test:api:report
+
+             - store_test_results:
+                path: /tmp/test-results
 workflows:
   testcafe-typescript_front-back:
     jobs:
       - ui-tests
       - api-test
-      - store_test_results: 
-         path: test-results
-
-
-
-
