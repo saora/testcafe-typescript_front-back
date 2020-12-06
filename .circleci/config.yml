@@ -9,7 +9,7 @@ jobs:
        steps:
          - checkout  
          - run: npm install
-         - run: npm run test:functional:chrome:headless:with:report
+         - run: npm run test:functional:chrome:headless
      api-test:
         executor:
            name: node/default
