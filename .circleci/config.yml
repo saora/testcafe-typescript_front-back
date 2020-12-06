@@ -22,3 +22,9 @@ workflows:
     jobs:
       - ui-tests
       - api-test
+      - store_test_results: 
+         path: test-results
+
+
+
+
