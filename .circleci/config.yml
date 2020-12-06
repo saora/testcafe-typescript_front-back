@@ -13,7 +13,7 @@ jobs:
            name: node/default
         steps:
              - checkout
-             - run: npm intall
+             - run: npm install
              - run: npm run test
 workflows:
   testcafe-typescript_front-back:
