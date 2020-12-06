@@ -1,26 +1,20 @@
-version: 2
-jobs:
-  build:
-    docker:
-      - image: circleci/node:10.14-browsers
+version: 2.1
+orbs:
+  node: circleci/node@3.0.0
+  browser-tools: cicleci/browser-tools@1.0.0
+workflows:
+ testcafe-typescript_fron-back:
+   jobs:
+     tests:
+       executor:
+         name: node/default
+     api-test:
+           executor:
+           name: node/default
+           steps:
+             - checkout
+             - run: npm intall
+             - run: npm run test
 
-    working_directory: ~/repo
-
-    steps:
-      - checkout
-      - restore_cache:
-          keys:
-          - v1-dependencies-{{ checksum "package.json" }}
-          - v1-dependencies-
-
-      - run: yarn install
-
-      - save_cache:
-          paths:
-            - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
-
-      - run: yarn test
-
-      - store_test_results:
-          path: /tmp/test-results
+     - tests
+     - api-test
