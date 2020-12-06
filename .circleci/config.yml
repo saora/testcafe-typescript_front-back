@@ -8,13 +8,14 @@ jobs:
          name: node/default
        steps:
          - checkout  
+         - run: npm run test:functional:chrome:headless:with:report
      api-test:
         executor:
            name: node/default
         steps:
              - checkout
              - run: npm install
-             - run: npm run test:functional:chrome:headless:with:report
+             - run: npm run test:api:report
 workflows:
   testcafe-typescript_front-back:
     jobs:
