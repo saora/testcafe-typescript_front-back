@@ -1,20 +1,22 @@
 version: 2.1
 orbs:
   node: circleci/node@3.0.0
-  browser-tools: cicleci/browser-tools@1.0.0
-workflows:
- testcafe-typescript_fron-back:
-   jobs:
-     tests:
+  browser-tools: circleci/browser-tools@1.0.0
+jobs:
+     ui-tests:
        executor:
          name: node/default
+       steps:
+         - checkout  
      api-test:
-           executor:
+        executor:
            name: node/default
-           steps:
+        steps:
              - checkout
              - run: npm intall
              - run: npm run test
-
-     - tests
-     - api-test
+workflows:
+  testcafe-typescript_front-back:
+    jobs:
+      - ui-tests
+      - api-test
