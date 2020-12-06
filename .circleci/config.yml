@@ -14,7 +14,7 @@ jobs:
         steps:
              - checkout
              - run: npm install
-             - run: npm run test
+             - run: npm run test:functional:chrome:headless:with:report
 workflows:
   testcafe-typescript_front-back:
     jobs:
