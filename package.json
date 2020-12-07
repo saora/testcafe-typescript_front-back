@@ -23,7 +23,7 @@
     "lint": "eslint ./functionalTest --fix",
     "test:api": "newman run functionalTest/api/todoist.postman_collection.json -e functionalTest/api/todoist.postman_environment.json",
     "test:api:report": "newman run functionalTest/api/todoist.postman_collection.json -e functionalTest/api/todoist.postman_environment.json -r htmlextra --reporter-htmlextra-export test-reports/apiNewmanReport.html",
-    "test:functional": "testcafe 'browserstack:Chrome@81.0:Windows 10' functionalTest/tests/ -e"
+    "test:functional:browserstack": "testcafe 'browserstack:Chrome@81.0:Windows 10' functionalTest/tests/ -e"
  
   },
   "author": "",
