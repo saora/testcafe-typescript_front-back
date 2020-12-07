@@ -9,6 +9,7 @@ export class LoginPage{
     title: Selector
     loginLink: Selector
     errorMsg: Selector
+    timeZoneLink: Selector
 
 
 
@@ -23,6 +24,7 @@ export class LoginPage{
         this.loginBtn = '#login_form > button'
         this.title = Selector('#agenda_view>header>div>h1>span')
         this.errorMsg = Selector('div.error_block>div>span')
+        this.timeZoneLink = Selector('.timezone_link')
 
     }
 
@@ -31,6 +33,10 @@ export class LoginPage{
         .typeText(this.email, useEmail)
         .typeText(this.password, userPassword)
         .click(this.loginBtn)
+
+        if(await Selector('.timezone_link').exists == true){
+            await t.click(this.timeZoneLink.nth(0))
+        }
     }
 
 
