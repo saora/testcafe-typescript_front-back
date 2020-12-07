@@ -12,8 +12,8 @@ require('dotenv').config();
 fixture('Task validations').page(process.env.baseUrl)
 .beforeEach(async t => {
     await main.navigateToLogin()
-    await login.login(data.email, data.password)
-    await t.expect(login.title.innerText).eql(data.result)
+    await login.login(process.env.TODOIST_USERNAME, process.env.TODOIST_PASSWORD)
+    await t.expect(login.title.innerText).eql('Today')
 })
 
 
