@@ -10,7 +10,7 @@ jobs:
        steps:
          - checkout  
          - run: npm install
-         - run: npm run test:functional:chrome:headless
+         - run: npm run test:browserstack
          - slack/notify:
              event: fail
              mentions: '@salvador ortuno'
@@ -22,7 +22,7 @@ jobs:
         steps:
              - checkout
              - run: npm install
-             - run: npm run test:browserstack
+             - run: npm run test:api
 
 workflows:
   testcafe-typescript_front-back:
