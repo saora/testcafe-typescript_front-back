@@ -13,7 +13,7 @@ jobs:
          - run: npm run test:functional:browserstack
          - store_test_results:
                path: test-reports
-         - tore_artifacts:
+         - store_artifacts:
                path: test-reports
       
    
