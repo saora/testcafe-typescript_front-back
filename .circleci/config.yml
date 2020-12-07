@@ -7,15 +7,24 @@ jobs:
      ui-tests:
        executor:
          name: node/default
+       working_directory: /tmp  
        steps:
          - checkout  
          - run: npm install
          - run: npm run test:functional:browserstack
-         - store_test_results:
-               path: test-reports
+         - run:
+             name: Creating Dummy Artifacts
+             command: |
+               echo "my artifact file" > /tmp/artifact-1;
+               mkdir /tmp/artifacts;
+               echo "my artifact files in a dir" > /tmp/artifacts/artifact-2;
+
          - store_artifacts:
-               path: test-reports
-      
+             path: /tmp/artifact-1
+             destination: artifact-file
+
+         - store_artifacts:
+             path: /tmp/artifacts
    
 
      api-test:
