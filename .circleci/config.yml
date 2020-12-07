@@ -28,6 +28,11 @@ jobs:
                   event: pass
                   template: success_tagged_deploy_1
 
+     results:
+         steps:
+             - store_test_results:
+                  path: /tmp/test-reports         
+
          
 
 
