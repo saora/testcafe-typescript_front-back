@@ -26,13 +26,13 @@ jobs:
              - run: npm run test:api
              - slack/notify:
                   event: fail
-                  mentions: 'saora mx'
+                  mentions: 'general'
                   template: basic_fail_1
-                  webhook: '${SLACK_WEBHOOK}'
+
              - slack/notify:
                   event: pass
                   template: success_tagged_deploy_1
-                  webhook: '${SLACK_WEBHOOK}'
+
 
     
 
