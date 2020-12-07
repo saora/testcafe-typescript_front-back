@@ -33,10 +33,8 @@ export class LoginPage{
         .typeText(this.email, useEmail)
         .typeText(this.password, userPassword)
         .click(this.loginBtn)
-
-        if(await Selector('.timezone_link').exists == true){
-            await t.click(this.timeZoneLink.nth(0))
-        }
+        .click(this.timeZoneLink.nth(0))
+        
     }
 
 
