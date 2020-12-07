@@ -7,12 +7,11 @@ jobs:
      ui-tests:
        executor:
          name: node/default
-       working_directory: ~/work 
        steps:
          - checkout  
          - run: npm install
          - run: npm run test:functional:browserstack
-        - store_test_results:
+         - store_test_results:
              path: test-results
          - store_artifacts:
              path: test-results
