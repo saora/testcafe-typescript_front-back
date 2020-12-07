@@ -12,18 +12,10 @@ jobs:
          - checkout  
          - run: npm install
          - run: npm run test:functional:browserstack
-         - run: |
-               # tell the operating system to remove the file size limit on core dump files 
-               ulimit -c unlimited
-               ./dump
-         - run:
-            command: |
-                mkdir -p /tmp/core_dumps
-                cp core.* /tmp/core_dumps
-            
-            when: on_fail
+        - store_test_results:
+             path: test-results
          - store_artifacts:
-             path: /core_dumps
+             path: test-results
    
 
      api-test:
