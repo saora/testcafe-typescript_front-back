@@ -29,7 +29,7 @@ jobs:
                   mentions: 'saora mx'
                   template: basic_fail_1
                   webhook: '${SLACK_WEBHOOK}'
-            - slack/notify:
+             - slack/notify:
                   event: pass
                   template: success_tagged_deploy_1
                   webhook: '${SLACK_WEBHOOK}'
