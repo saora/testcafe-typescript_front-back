@@ -24,7 +24,7 @@ jobs:
              - checkout
              - run: npm install
              - run: npm run test:api
-             - slack/status:
+             - slack/notify:
                   fail_only: false
                   mentions: 'saora mx'
                   only_for_branches: 'master, circleci-project-setup'
