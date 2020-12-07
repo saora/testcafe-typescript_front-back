@@ -13,14 +13,11 @@ fixture('Login validations').page(process.env.baseUrl)
     console.log(process.env.EMAIL)
 })
 
-dataSet.forEach((data: { user: string; email: string; password: string; result: string; }) => {
-    test(`Login with ${data.user} `, async(t) => {
-        await login.login(data.email, data.password)
-        if(data.user == 'valid user'){
-            await t.expect(login.title.innerText).eql(data.result)
-        }else{
-            await t.expect(login.errorMsg.innerText).eql(data.result)
-        } 
+
+    test(`Login with valid user`, async(t) => {
+        await login.login(process.env.TODOIST_USERNAME, process.env.TODOIST_PASSWORD)
+            await t.expect(login.title.innerText).eql('Today')
+      
     })
-});
+
 
