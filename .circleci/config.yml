@@ -12,9 +12,9 @@ jobs:
          - run: npm install
          - run: npm run test:functional:browserstack
          - store_test_results:
-               path: test-report
+               path: test-reports
          - tore_artifacts:
-               path: test-report
+               path: test-reports
       
    
 
