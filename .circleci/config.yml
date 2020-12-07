@@ -12,7 +12,6 @@ jobs:
          - checkout  
          - run: npm install
          - run: npm run test:functional:browserstack
-         - run:
          - run: |
                # tell the operating system to remove the file size limit on core dump files 
                ulimit -c unlimited
