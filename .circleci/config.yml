@@ -1,0 +1,38 @@
+version: 2.1
+orbs:
+  node: circleci/node@3.0.0
+  browser-tools: circleci/browser-tools@1.0.0
+  slack: circleci/slack@4.1.3
+jobs:
+     ui-tests:
+       executor:
+         name: node/default
+       steps:
+         - checkout  
+         - run: npm install
+         - run: npm run test:browserstack
+   
+
+     api-test:
+        executor:
+           name: node/default
+        steps:
+             - checkout
+             - run: npm install
+             - run: npm run test:api
+             - slack/notify:
+                  event: fail
+                  mentions: 'saora mx'
+                  template: basic_fail_1
+             - slack/notify:
+                  event: pass
+                  template: success_tagged_deploy_1
+
+         
+
+
+workflows:
+  testcafe-typescript_front-back:
+    jobs:
+      - ui-tests
+      - api-test
