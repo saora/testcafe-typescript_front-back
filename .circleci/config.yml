@@ -11,10 +11,7 @@ jobs:
          - checkout  
          - run: npm install
          - run: npm run test:browserstack
-         - slack/notify:
-             event: fail
-             mentions: '@salvador ortuno'
-             template: basic_fail_1
+   
 
      api-test:
         executor:
@@ -23,6 +20,14 @@ jobs:
              - checkout
              - run: npm install
              - run: npm run test:api
+             - slack/notify:
+                   event: fail
+                   color: "#42e2f4"
+                   mentions: "@saora mx"
+                   message: A custom message to notify the channel about the latest build
+             - slack/status:
+                   fail_only: false
+                   mentions: "@saora mx"
 
 workflows:
   testcafe-typescript_front-back:
