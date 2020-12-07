@@ -27,9 +27,9 @@ jobs:
              - slack/status:
                   fail_only: false
                   mentions: 'saora mx'
-                  only_for_branches: master
+                  only_for_branches: 'master, circleci-project-setup'
                   webhook: '${SLACK_WEBHOOK}'
-      
+
     
 
 workflows:
