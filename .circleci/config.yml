@@ -11,6 +11,11 @@ jobs:
          - checkout  
          - run: npm install
          - run: npm run test:functional:browserstack
+         - store_test_results:
+               path: test-report
+         - tore_artifacts:
+               path: test-report
+      
    
 
      api-test:
@@ -27,14 +32,7 @@ jobs:
              - slack/notify:
                   event: pass
                   template: success_tagged_deploy_1
-
-     results:
-         steps:
-             - store_test_results:
-                  path: /tmp/test-reports         
-
-         
-
+    
 
 workflows:
   testcafe-typescript_front-back:
