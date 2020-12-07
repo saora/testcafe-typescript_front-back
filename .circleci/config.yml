@@ -22,7 +22,7 @@ jobs:
              - run: npm run test:api
              - slack/notify:
                   event: fail
-                  mentions: '@saora mx'
+                  mentions: 'saora mx'
                   template: basic_fail_1
              - slack/notify:
                   event: pass
